@@ -45,20 +45,14 @@ public class Robot extends TimedRobot {
     var speed = stick.getY(Hand.kLeft);
     var rotation = -1 * stick.getX(Hand.kLeft);
 
-    // vvvvv Old function Sean liked vvvvv
-    // if(stick.getBumperPressed(Hand.kRight))
-    // {
-    //   speed = speed / Math.abs(speed) * Math.sqrt(Math.abs(speed));
-    //   rotation = rotation / Math.abs(rotation) * Math.sqrt(Math.abs(rotation));
-    // }
-    // else
-    // {
-    //   speed = speed / Math.abs(speed) * Math.pow(Math.abs(speed), 2);
-    //   rotation = rotation / Math.abs(rotation) * Math.pow(Math.abs(rotation), 2);
-    // }
-
     speed = Math.pow(speed, 3);
     rotation = Math.pow(rotation, 3);
+
+    if(stick.getBumper(Hand.kLeft)) 
+    {
+      speed *= 0.25;
+      rotation *= 0.25;
+    }
 
     robotDrive.arcadeDrive(speed, rotation);
     if(stick.getTriggerAxis(Hand.kLeft) > stick.getTriggerAxis(Hand.kRight))
