@@ -48,10 +48,10 @@ public class Robot extends TimedRobot {
     speed = Math.pow(speed, 3);
     rotation = Math.pow(rotation, 3);
 
-    if(stick.getBumper(Hand.kLeft)) 
+    if(stick.getBumper(Hand.kRight)) 
     {
-      speed *= 0.25;
-      rotation *= 0.25;
+      speed = Math.pow(speed, 2);
+      rotation = Math.pow(rotation, 2);
     }
 
     robotDrive.arcadeDrive(speed, rotation);
