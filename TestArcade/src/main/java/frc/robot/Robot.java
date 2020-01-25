@@ -37,6 +37,7 @@ public class Robot extends TimedRobot {
   public void robotInit() 
   {
     super.robotInit();
+    robotDrive.setDeadband(.1);
   }
 
   @Override
@@ -45,21 +46,21 @@ public class Robot extends TimedRobot {
     var speed = stick.getY(Hand.kLeft);
     var rotation = -1 * stick.getX(Hand.kLeft);
 
-    speed = Math.pow(speed, 3);
-    rotation = Math.pow(rotation, 3);
+    // speed = Math.pow(speed, 3);
+    // rotation = Math.pow(rotation, 3);
 
-    if(stick.getBumper(Hand.kRight)) 
-    {
-      speed = Math.pow(speed, 2);
-      rotation = Math.pow(rotation, 2);
-    }
+     if(stick.getBumper(Hand.kRight)) 
+     {
+       speed *= 0.65/*Math.pow(speed, 3)*/;
+       rotation *= 0.65/*Math.pow(rotation, 3)*/;
+     }
 
-    robotDrive.arcadeDrive(speed, rotation);
+    robotDrive.curvatureDrive(speed, rotation, true);
     if(stick.getTriggerAxis(Hand.kLeft) > stick.getTriggerAxis(Hand.kRight))
     {
       nicksMotor.setSpeed(stick.getTriggerAxis(Hand.kLeft));
     }
-    else
+    else  
     {
       nicksMotor.setSpeed(-1 * stick.getTriggerAxis(Hand.kRight));
     }
